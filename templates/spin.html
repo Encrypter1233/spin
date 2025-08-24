@@ -1,35 +1,65 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lucky Spin</title>
   <style>
-    :root{
+    :root {
       --size: 420px;
       --slice-count: 8;
       --transition-ms: 5200;
     }
-    html,body{height:100%;}
-    body{
-      margin:0; display:grid; place-items:center; min-height:100%;
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      display: grid;
+      place-items: center;
+      min-height: 100%;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       background: radial-gradient(1200px 600px at 50% -20%, #f7f7ff 0, #eef2ff 33%, #e9f5ff 66%, #eafaf1 100%);
     }
-    .app{ width:min(92vw, 560px); text-align:center; }
-    .title{ font-size: clamp(22px, 4vw, 28px); margin: 14px 0 8px; }
-    .subtitle{ color:#475569; margin:0 0 18px; font-size:14px; }
 
-    .stage{ position:relative; display:grid; place-items:center; margin: 6px auto 18px; }
-    .wheel{
-      width: var(--size); height: var(--size);
+    .app {
+      width: min(92vw, 560px);
+      text-align: center;
+    }
+
+    .title {
+      font-size: clamp(22px, 4vw, 28px);
+      margin: 14px 0 8px;
+    }
+
+    .subtitle {
+      color: #475569;
+      margin: 0 0 18px;
+      font-size: 14px;
+    }
+
+    .stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      margin: 6px auto 18px;
+    }
+
+    .wheel {
+      width: var(--size);
+      height: var(--size);
       border-radius: 50%;
-      display:grid; place-items:center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.12), inset 0 0 0 12px #fff, inset 0 0 0 14px #e2e8f0;
-      transition: transform calc(var(--transition-ms)*1ms) cubic-bezier(.15,.8,.15,1);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .12), inset 0 0 0 12px #fff, inset 0 0 0 14px #e2e8f0;
+      transition: transform calc(var(--transition-ms)*1ms) cubic-bezier(.15, .8, .15, 1);
       will-change: transform;
       user-select: none;
-      position:relative;
+      position: relative;
       background:
         conic-gradient(from -90deg,
           #ff9aa2 0deg 45deg,
@@ -39,39 +69,99 @@
           #c7ceea 180deg 225deg,
           #ffd1dc 225deg 270deg,
           #f1f0c0 270deg 315deg,
-          #a0e7e5 315deg 360deg
-        );
+          #a0e7e5 315deg 360deg);
     }
 
-    .labels{ position:absolute; inset:0; }
-    .label{ position:absolute; left:50%; top:50%; width:50%; height:0; transform-origin: 0% 0%; }
-    .label img{
-      position:absolute; right:10px; top:-25px;
+    .labels {
+      position: absolute;
+      inset: 0;
+    }
+
+    .label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 50%;
+      height: 0;
+      transform-origin: 0% 0%;
+    }
+
+    .label img {
+      position: absolute;
+      right: 10px;
+      top: -25px;
       transform: translateY(-50%) rotate(var(--pull));
-      width:50px; height:50px; object-fit:contain;
-      border-radius:8px;
-      background:#fff; padding:4px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.10);
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #fff;
+      padding: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .10);
     }
 
-    .hub{
-      position:absolute; width:140px; height:140px; border-radius:50%;
-      background:#ffffff; display:grid; place-items:center;
-      box-shadow: 0 6px 20px rgba(0,0,0,.12), inset 0 0 0 2px #e5e7eb;
+    .hub {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .12), inset 0 0 0 2px #e5e7eb;
     }
-    .hub button{
-      all:unset; cursor:pointer; padding:12px 20px; border-radius:999px; font-weight:700;
-      box-shadow: 0 8px 20px rgba(59,130,246,.25); background:#3b82f6; color:white; letter-spacing:.2px;
+
+    .hub button {
+      all: unset;
+      cursor: pointer;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(59, 130, 246, .25);
+      background: #3b82f6;
+      color: white;
+      letter-spacing: .2px;
       transition: transform .12s ease, filter .12s ease, opacity .2s ease;
     }
-    .hub button:hover{ transform: translateY(-1px); filter:brightness(1.06); }
-    .hub button:disabled{ opacity:.6; cursor:not-allowed; }
 
-    .pointer{ position:absolute; top:-8px; left:50%; transform: translateX(-50%); width:0; height:0; border-left:14px solid transparent; border-right:14px solid transparent; border-bottom:22px solid #111827; filter: drop-shadow(0 4px 2px rgba(0,0,0,.25)); }
-    .result{ min-height: 26px; font-weight:700; color:#0f172a; margin-top:12px; font-size:18px; }
-    .hint{ font-size:12px; color:#64748b; }
+    .hub button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.06);
+    }
+
+    .hub button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .pointer {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-bottom: 22px solid #111827;
+      filter: drop-shadow(0 4px 2px rgba(0, 0, 0, .25));
+    }
+
+    .result {
+      min-height: 26px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-top: 12px;
+      font-size: 18px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #64748b;
+    }
   </style>
 </head>
+
 <body>
   <main class="app" aria-live="polite">
     <h1 class="title">Spin & Win</h1>
@@ -116,11 +206,11 @@
     slices.forEach((slice, i) => {
       const node = document.createElement('div');
       node.className = 'label';
-      node.style.transform = `rotate(${i*sliceAngle + sliceAngle/2}deg)`;
+      node.style.transform = `rotate(${i * sliceAngle + sliceAngle / 2}deg)`;
       const img = document.createElement('img');
       img.src = slice.img;
       img.alt = slice.name;
-      img.style.setProperty('--pull', `${- (i*sliceAngle + sliceAngle/2)}deg`);
+      img.style.setProperty('--pull', `${- (i * sliceAngle + sliceAngle / 2)}deg`);
       node.appendChild(img);
       labels.appendChild(node);
     });
@@ -136,23 +226,24 @@
 
       const targetIndex = slices.findIndex(s => s.name === ALWAYS_WIN);
       const jitter = (Math.random() - 0.5) * (sliceAngle * 0.6);
-      const finalRotation = FULL_SPINS*360 + 360 - (targetIndex*sliceAngle + jitter);
+      const finalRotation = FULL_SPINS * 360 + 360 - (targetIndex * sliceAngle + jitter);
 
       lastRotation += finalRotation;
       wheel.style.transform = `rotate(${lastRotation}deg)`;
     }
 
     wheel.addEventListener('transitionend', () => {
-      resultBox.textContent = `🎉 Congratulations! You won 😍🎉🎉 Fill the details to redeem it.:  ${ALWAYS_WIN}`;
+      resultBox.textContent = ``;
       setTimeout(() => {
         window.location.href = 'index.html';
-      }, 10000);
+      }, 8000);
       isSpinning = false;
       btn.disabled = false;
     });
 
     btn.addEventListener('click', spin);
-    window.addEventListener('keydown', (e) => { if (e.code === 'Space') { e.preventDefault(); spin(); } });
+    window.addEventListener('keydown', (e) => {if (e.code === 'Space') {e.preventDefault(); spin();} });
   </script>
 </body>
+
 </html>
